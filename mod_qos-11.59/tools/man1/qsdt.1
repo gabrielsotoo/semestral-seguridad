@@ -1,0 +1,40 @@
+.TH QSDT 1 "November 2018" "mod_qos utilities 11.59" "qsdt man page"
+
+.SH NAME
+qsdt calculates the elapsed time between two related log messages. 
+.SH SYNOPSIS
+qsdt [\-t <regex>] \-i <regex> \-s <regex> \-e <regex> [\-v] [<path>] 
+.SH DESCRIPTION
+qsdt is a simple tool to search two different messages in a log file and calculates the elapsed time between these lines. The two log messages need a common identifier such an unique request id (UNIQUE_ID), a thread id, or a transaction code. 
+.SH OPTIONS
+.TP
+\-t <regex> 
+Defines a pattern (regular expression) matching the log line's timestamp. The pattern must include two sub\-expressions, one matching hours, minutes and seconds the other matching the milliseconds. Default pattern is ([0\-9]{2}:[0\-9]{2}:[0\-9]{2})[.,]([0\-9]{3}) 
+.TP
+\-i <regex> 
+Pattern (regular expression) matching the identifier which the two messages have in common. The sub\-expression defines the part which needs to be extracted from the matching string. 
+.TP
+\-s <regex> 
+Defines the pattern (regular expression or literal string) identifying the first (start) of the two messages. 
+.TP
+\-e <regex> 
+Defines the pattern (regular expression or literal string) identifying the second (end) of the two messages. 
+.TP
+\-v 
+Verbose mode. 
+.TP
+<path> 
+Defines the input file to process. qsdt reads from from standard input if this parameter is omitted. 
+.SH EXAMPLE
+Sample command line arguments:
+
+  \-i ' ([a\-z0\-9]+) [A\-Z]+ ' \-s 'Received Request' \-e 'Received Response'
+
+ matching those sample log messages:
+  2018\-03\-12 16:34:08.653 threadid23 INFO Received Request
+  2018\-03\-13 16:35:09.891 threadid23 DEBUG MessageHandler Received Response
+
+.SH SEE ALSO
+qsexec(1), qsfilter2(1), qsgeo(1), qsgrep(1), qshead(1), qslog(1), qslogger(1), qspng(1), qsre(1), qsrespeed(1), qsrotate(1), qssign(1), qstail(1)
+.SH AUTHOR
+Pascal Buchbinder, http://mod-qos.sourceforge.net/

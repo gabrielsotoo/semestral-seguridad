@@ -1,0 +1,58 @@
+version: '3.2'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: helloworld
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: allahu
+      MYSQL_PASSWORD: ackbar
+
+  wordpress:
+      depends_on:
+        - db
+      ports:
+        - "8000:80"
+      image: wordpress:latest
+      tty: true
+      restart: always
+      links:
+        - redis
+      environment:
+        - 'HOSTNAME=localhost.wordpress.com'
+        - 'WORDPRESS_DB_HOST: db:3306'
+        - 'WORDPRESS_DB_USER: allahu'
+        - 'WORDPRESS_DB_PASSWORD: ackbar'
+  redis:
+    image: redis:latest
+  web-server-1:
+      build: ./web-server
+      tty: true
+      volumes:
+        - './web-server/src:/usr/local/apache2/htdocs'
+  web-server-2:
+      build: ./web-server
+      tty: true
+      volumes:
+        - './web-server/src:/usr/local/apache2/htdocs'
+  web-server-3:
+      build: ./web-server
+      tty: true
+      volumes:
+        - './web-server/src:/usr/local/apache2/htdocs'
+  load-balancer:
+      build: ./load-balancer
+      tty: true
+      links:
+          - web-server-1
+          - web-server-2
+          - web-server-3
+          - wordpress
+      ports:
+          - '443:443'
+volumes:
+  web-server:
+  db_data:      

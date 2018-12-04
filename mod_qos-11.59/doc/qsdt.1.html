@@ -1,0 +1,76 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of QSDT</TITLE>
+<META name='KeyWords' content='Quality of Service, QoS, Apache Web Server, Web application security, WAF, Open Source Software, Security, Proxy'/>
+<META name='author' content='Pascal Buchbinder' />
+</HEAD><BODY>
+<H1>QSDT</H1>
+Section: qsdt man page (1)<BR>Updated: November 2018<BR><A HREF="#index">Index</A>
+<A HREF="index.html#utilities">Return to Main Contents</A><HR>
+
+<P>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+qsdt calculates the elapsed time between two related log messages. 
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+qsdt [-t &lt;regex&gt;] -i &lt;regex&gt; -s &lt;regex&gt; -e &lt;regex&gt; [-v] [&lt;path&gt;] 
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+qsdt is a simple tool to search two different messages in a log file and calculates the elapsed time between these lines. The two log messages need a common identifier such an unique request id (UNIQUE_ID), a thread id, or a transaction code. 
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT>-t &lt;regex&gt; <DD>
+Defines a pattern (regular expression) matching the log line's timestamp. The pattern must include two sub-expressions, one matching hours, minutes and seconds the other matching the milliseconds. Default pattern is ([0-9]{2}:[0-9]{2}:[0-9]{2})[.,]([0-9]{3}) 
+<DT>-i &lt;regex&gt; <DD>
+Pattern (regular expression) matching the identifier which the two messages have in common. The sub-expression defines the part which needs to be extracted from the matching string. 
+<DT>-s &lt;regex&gt; <DD>
+Defines the pattern (regular expression or literal string) identifying the first (start) of the two messages. 
+<DT>-e &lt;regex&gt; <DD>
+Defines the pattern (regular expression or literal string) identifying the second (end) of the two messages. 
+<DT>-v <DD>
+Verbose mode. 
+<DT>&lt;path&gt; <DD>
+Defines the input file to process. qsdt reads from from standard input if this parameter is omitted. 
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+Sample command line arguments:
+<P>
+<BR>&nbsp;&nbsp;-i&nbsp;'&nbsp;([a-z0-9]+)&nbsp;[A-Z]+&nbsp;'&nbsp;-s&nbsp;'Received&nbsp;Request'&nbsp;-e&nbsp;'Received&nbsp;Response'
+<P>
+<BR>&nbsp;matching&nbsp;those&nbsp;sample&nbsp;log&nbsp;messages:
+<BR>&nbsp;&nbsp;2018-03-12&nbsp;16:34:08.653&nbsp;threadid23&nbsp;INFO&nbsp;Received&nbsp;Request
+<BR>&nbsp;&nbsp;2018-03-13&nbsp;16:35:09.891&nbsp;threadid23&nbsp;DEBUG&nbsp;MessageHandler&nbsp;Received&nbsp;Response
+<P>
+<A NAME="lbAG">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<A HREF="qsexec.1.html">qsexec</A>(1), <A HREF="qsfilter2.1.html">qsfilter2</A>(1), <A HREF="qsgeo.1.html">qsgeo</A>(1), <A HREF="qsgrep.1.html">qsgrep</A>(1), <A HREF="qshead.1.html">qshead</A>(1), <A HREF="qslog.1.html">qslog</A>(1), <A HREF="qslogger.1.html">qslogger</A>(1), <A HREF="qspng.1.html">qspng</A>(1), <A HREF="qsre.1.html">qsre</A>(1), <A HREF="qsrespeed.1.html">qsrespeed</A>(1), <A HREF="qsrotate.1.html">qsrotate</A>(1), <A HREF="qssign.1.html">qssign</A>(1), <A HREF="qstail.1.html">qstail</A>(1)
+<A NAME="lbAH">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Pascal Buchbinder, <A HREF="http://mod-qos.sourceforge.net/">http://mod-qos.sourceforge.net/</A>
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">EXAMPLE</A><DD>
+<DT><A HREF="#lbAG">SEE ALSO</A><DD>
+<DT><A HREF="#lbAH">AUTHOR</A><DD>
+</DL>
+<HR>
+
+</BODY>
+</HTML>
